@@ -9,8 +9,22 @@ var API = {
             });
         },
         getComments: function(board, id, cb) {
-            fetch(getBoardUrl(board) + 'posts/' + id + '/comments').the((response) => response.text()).then(function(response) {
-                cb(response); // PARSE HTML COMMENTS HERE
+            fetch(getBoardUrl(board) + 'posts/' + id + '/comments').then((response) => response.text()).then(function(response) {
+                var $ = cheerio.load(response);
+                var comments = $('.js-comment-content').map(function() {
+                    var $comment = $(this),
+                        avatar = $comment.find('.comment-media img').attr('src').trim(),
+                        name = $comment.find('.comment-meta a').eq(1).text().trim(),
+                        comment = $comment.find('.js-comment-body').text();
+
+                    avatar = avatar[0] != 'h' ? 'http:' + avatar : avatar;
+                    return {
+                        avatar,
+                        name,
+                        comment
+                    }
+                })
+                cb(comments.toArray());
             })
         },
         getPost: function(board, id, cb) {

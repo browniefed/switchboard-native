@@ -5,8 +5,10 @@ var {
     Text,
     ListView,
     Image,
-    WebView
+    ScrollView
 } = React;
+
+var HTMLWebView = require('react-native-html-webview');
 
 
 var Post = React.createClass({
@@ -33,11 +35,10 @@ var Post = React.createClass({
                 <View>
                     <Image style={{width: 72, height: 72}} source={{uri: comment.avatar }} />
                     <Text>{comment.name}</Text>
-                    <WebView 
-                        html={comment.comment} 
-                        scalesPageToFit={true}
-                        automaticallyAdjustContentInsets={true}
-                        style={{flex: 1, height: 100}}
+                    <HTMLWebView
+                        style={{flex: 1}}
+                        html={comment.comment}
+                        autoHeight={true}
                     />
                 </View>
             )
@@ -50,7 +51,9 @@ var Post = React.createClass({
                 <Text>{this.state.poster}</Text>
                 <Text>{this.state.heartCount}</Text>
                 <Text>{this.state.commentCount}</Text>
-                {this.getComments()}
+                <ScrollView>
+                    {this.getComments()}
+                </ScrollView>
             </View>
         );
     }

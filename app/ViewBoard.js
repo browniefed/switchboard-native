@@ -13,7 +13,8 @@ function parseItem(item) {
     var _parsedItem = {
         title: item.title[0]._text,
         description: item.description[0]._text,
-        link: item.link[0]._text
+        link: item.link[0]._text,
+        id: item.link[0]._text.split('/').reverse()[0]
     };
 
     if (item.pubDate) {
@@ -69,8 +70,14 @@ var ViewBoard = React.createClass({
             dataSource: this.state.dataSource.cloneWithRows(items)
         });
     },
-    handleItemSelection: function() {
-
+    handleItemSelection: function(item) {
+        this.props.navigator.push({
+            route: 'VIEW_POST',
+            props: {
+                item: item,
+                board: this.props.id
+            }
+        })
     },
     handleNextPage: function() {
         this.state.currentPage += 1;

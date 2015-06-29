@@ -19,12 +19,11 @@ var Post = React.createClass({
         }
     },
     componentWillMount: function() {
-        API.posts.getPost('', 12200, function(post) {
+        API.posts.getPost(this.props.board, this.props.item.id, function(post) {
             this.setState(post);
         }.bind(this));
 
-        API.posts.getComments('', 12200, function(comments) {
-
+        API.posts.getComments(this.props.board, this.props.item.id, function(comments) {
             this.setState({
                 comments: comments || []
             });
@@ -51,16 +50,23 @@ var Post = React.createClass({
     },
     render: function() {
         return (
-            <View style={{flexDirection: 'column'}}>
+            <View style={{flexDirection: 'column', flex: 1}}>
                 <View stlye={{flex: 1}}>
-                    <Image style={{width: 72, height: 72}} source={{uri: 'http:' + this.state.avatar}} />
-                    <Text>{this.state.poster}</Text>
-                    <Text>{this.state.heartCount}</Text>
-                    <Text>{this.state.commentCount}</Text>
+                        <Image style={{width: 72, height: 72}} source={{uri: 'http:' + this.state.avatar}} />
+                        <Text>{this.state.poster}</Text>
+                        <Text>Hearts: {this.state.heartCount}</Text>
+                        <Text>Comments: {this.state.commentCount}</Text>
+                        <HTMLWebView
+                            html={this.props.item.description}
+                            autoHeight={true}
+                            onLink={this.handleLinkClick}
+                        />
                 </View>
-                <ScrollView style={{flex: 4, height: 400}}>
-                    {this.getComments()}
-                </ScrollView>
+                <View style={{flex: 1}}>
+                    <ScrollView style={{flex: 1}}>
+                        {this.getComments()}
+                    </ScrollView>
+                </View>
             </View>
         );
     }

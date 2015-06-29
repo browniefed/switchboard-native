@@ -4,19 +4,23 @@ var {
     View,
     StyleSheet,
     ListView,
-    Text
+    Text,
+    TouchableOpacity
 } = React;
 
 var BoardList = React.createClass({
     _renderRow: function(rowData, sectionId, rowId) {
         return (
-            <View                 
-                style={styles.row}
+            <TouchableOpacity
                 onPress={this.props.onSelection.bind(null, rowData)}
-            > 
-                <Text>{rowData.title}</Text>
-                <Text>{rowData.description}</Text>
-            </View>
+            >
+                <View                 
+                    style={styles.row}
+                > 
+                    <Text>{rowData.title}</Text>
+                    <Text>{rowData.description}</Text>
+                </View>
+            </TouchableOpacity>
         )
     },
     _renderSeparator: function() {

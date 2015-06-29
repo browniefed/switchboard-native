@@ -13,9 +13,12 @@ var DEFAULT_BOARD_LIST = [
                         },
                         {
                             id: 'epicodus'
+                        },
+                        {
+                            id: 'designportland'
                         }, 
                         {
-                            id: 'reed'
+                            id: 'meatcollectives'
                         }
                     ];
 
@@ -63,7 +66,6 @@ var App = React.createClass({
     });
   },
   renderScene: function(route, navigator) {
-
     var Component = route.route ? Routes[route.route].component : route.component;
 
     return (

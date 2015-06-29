@@ -15,7 +15,7 @@ var API = {
                     var $comment = $(this),
                         avatar = $comment.find('.comment-media img').attr('src').trim(),
                         name = $comment.find('.comment-meta a').eq(1).text().trim(),
-                        comment = $comment.find('.js-comment-body').text();
+                        comment = $comment.find('.js-comment-body').html();
 
                     avatar = avatar[0] != 'h' ? 'http:' + avatar : avatar;
                     return {
@@ -56,7 +56,7 @@ var API = {
 }
 
 function getBoardUrl(board) {
-    return 'https://pdxstartups.switchboardhq.com/';
+    return 'https://' + board + '.switchboardhq.com/';
 }
 
 module.exports = API;

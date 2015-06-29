@@ -27,6 +27,11 @@ function parseItem(item) {
 }
 
 var ViewBoard = React.createClass({
+    getDefaultProps: function() {
+        return {
+            id: null
+        }
+    },
     getInitialState: function() {
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         return {
@@ -42,7 +47,7 @@ var ViewBoard = React.createClass({
     loadPosts: function(page) {
         var query = page ? '?page=' + page : '';
 
-        API.posts.getPosts('',query, function(result) {
+        API.posts.getPosts(this.props.id,query, function(result) {
             var channel = parseItem(result.rss[0].channel[0]);
             this.setupBoard({
                 title: channel.title,

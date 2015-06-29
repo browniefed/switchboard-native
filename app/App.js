@@ -3,6 +3,7 @@ var Storage = require('./Storage');
 var {
   StyleSheet,
   View,
+  Navigator
 } = React;
 
 
@@ -21,6 +22,24 @@ var DEFAULT_BOARD_LIST = [
 var GlobalBoardSet = require('./GlobalBoardSet');
 var ViewBoard = require('./ViewBoard');
 var PostView = require('./Post');
+
+var Routes = {
+    'GLOBAL_BOARD_SET': {
+        name: 'GLOBAL_BOARD_SET',
+        index: 1,
+        component: GlobalBoardSet
+    },
+    'VIEW_BOARD': {
+        name: 'VIEW_BOARD',
+        index: 2,
+        component: ViewBoard
+    },
+    'VIEW_POST': {
+        name: 'VIEW_POST',
+        index: 3,
+        component: PostView
+    }
+}
 
 var App = React.createClass({
   getInitialState: function() {
@@ -41,21 +60,26 @@ var App = React.createClass({
   initApp: function() {
     this.setState({
         init: true
-    })
+    });
   },
-  getApp: function() {
-    if (!this.state.init) {
-      return <View />
-    }
+  renderScene: function(route, navigator) {
+
+    var Component = route.route ? Routes[route.route].component : route.component;
 
     return (
-        <PostView />
-    );
+        <Component 
+            navigator={navigator}
+            {...route.props}
+        />
+    )
   },
   render: function() {
     return (
       <View style={styles.container}>
-        {this.getApp()}
+        <Navigator
+            initialRoute={Routes.GLOBAL_BOARD_SET}
+            renderScene={this.renderScene}
+        />
       </View>
     );
   }

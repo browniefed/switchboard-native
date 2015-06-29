@@ -40,7 +40,10 @@ var GlobalBoardSet = React.createClass({
 
     },
     handleSelection: function(data) {
-        console.log(data);
+        this.props.navigator.push({
+            props: data,
+            route: 'VIEW_BOARD'
+        })
     },
     handleDelete: function() {
 

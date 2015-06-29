@@ -1,4 +1,4 @@
-var parse = require('xmltojson');
+var parse = require('./xmltojson');
 var cheerio = require('cheerio');
 
 var API = {

@@ -19,6 +19,12 @@ var GlobalBoardSet = React.createClass({
         }
     },
     componentWillMount: function() {
+        this.refreshBoards();
+    },
+    componentWillReceiveProps: function(nextProps) {
+        this.refreshBoards();
+    },
+    refreshBoards: function() {
         Storage.getSavedBoards().then(function(boards) {
             this.setState({
                 list: boards,

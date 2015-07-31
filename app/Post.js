@@ -6,7 +6,8 @@ var {
     ListView,
     Image,
     ScrollView,
-    LinkingIOS
+    LinkingIOS,
+    WebView
 } = React;
 
 var HTMLWebView = require('react-native-html-webview');
@@ -35,7 +36,7 @@ var Post = React.createClass({
     getComments: function() {
         return this.state.comments.map(function(comment) {
             return (
-                <View stlye={{flex: 1}}>
+                <View stlye={{height: 50, overflow: 'hidden'}}>
 
                     <Image style={{width: 72, height: 72}} source={{uri: comment.avatar }} />
                     <Text>{comment.name}</Text>
@@ -52,15 +53,19 @@ var Post = React.createClass({
         return (
             <View style={{flexDirection: 'column', flex: 1}}>
                 <View stlye={{flex: 1}}>
+                    <View style={{flex: 1}}>
                         <Image style={{width: 72, height: 72}} source={{uri: 'http:' + this.state.avatar}} />
                         <Text>{this.state.poster}</Text>
                         <Text>Hearts: {this.state.heartCount}</Text>
                         <Text>Comments: {this.state.commentCount}</Text>
-                        <HTMLWebView
+                    </View>
+                    <View style={{flex:1}}>
+                        <WebView
+                            style={{flex: 1, height: 100}}
                             html={this.props.item.description}
-                            autoHeight={true}
                             onLink={this.handleLinkClick}
                         />
+                    </View>
                 </View>
                 <View style={{flex: 1}}>
                     <ScrollView style={{flex: 1}}>
